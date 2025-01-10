@@ -1,9 +1,10 @@
 import React from 'react'
+import FormCategory from '../componets/admin/FormCategory'
 
 const Category = () => {
   return (
     <div>
-      Category
+      <FormCategory/>
     </div>
   )
 }
