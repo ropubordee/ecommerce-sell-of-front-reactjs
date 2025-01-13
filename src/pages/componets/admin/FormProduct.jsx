@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useEcomStore from "../../store/Ecom-store";
-import { createProduct } from "../../api/product";
+import { createProduct, deleteProduct } from "../../api/product";
 import { toast } from "react-toastify";
 import UploadFile from "./UploadFile";
+import { Link } from "react-router-dom";
 
 const initialState = {
-  title: "Razer Huntsman Elite Mechanical Keyboard",
-  description: "desc",
-  price: 200,
-  quantity: 10,
+  title: "",
+  description: "",
+  price: 0,
+  quantity: 0,
   categoryId: "",
   images: [],
 };
@@ -21,8 +22,6 @@ const FormProduct = () => {
   const products = useEcomStore((state) => state.products);
 
   const [form, setForm] = useState(initialState);
-
-
 
   useEffect(() => {
     getCategory(token);
@@ -42,9 +41,25 @@ const FormProduct = () => {
     try {
       const res = await createProduct(token, form);
       console.log(res);
+      setForm(initialState)
+      getProduct(token)
       toast.success(`เพิ่มข้อมูล ${res.data.title} สำเร็จ`);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleDalete = async (id) => {
+    console.log(id);
+    if(window.confirm('ยืนยันการลบ')){
+     try {
+        const res = await deleteProduct(token,id)
+        console.log(res)
+        toast.success('Delete สินค้าเรียบร้อยแล้ว')
+        getProduct(token)
+     } catch (error) {
+      console.log(error)
+     }
     }
   };
 
@@ -99,7 +114,7 @@ const FormProduct = () => {
         </select>
         <hr />
 
-          <UploadFile form={form} setForm={setForm}/>
+        <UploadFile form={form} setForm={setForm} />
 
         <button className="bg-green-600">เพิ่มสินค้า</button>
 
@@ -108,6 +123,7 @@ const FormProduct = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">รูปภาพ</th>
               <th scope="col">ชื่อสินค้า</th>
               <th scope="col">รายละเอียด</th>
               <th scope="col">ราคา</th>
@@ -119,19 +135,32 @@ const FormProduct = () => {
           </thead>
           <tbody>
             {products.map((item, index) => {
-         
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
+                  <td>
+                    {item.images.length > 0 ? (
+                      <img
+                        className="w-24 h-24 rounded-lg shadow-md"
+                        src={item.images[0].url}
+                      />
+                    ) : (
+                      <div className="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center shadow-sm">
+                        No image
+                      </div>
+                    )}
+                  </td>
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>{item.price}</td>
                   <td>{item.quantity}</td>
                   <td>{item.sold}</td>
                   <td>{item.updatedAt}</td>
-                  <td>
-                    <p>แก้ไข</p>
-                    <p>ลบ</p>
+                  <td className=" flex gap-3">
+                    <p className="bg-yellow-400 rounded-md p-1 shadow-md">
+                      <Link to={"/admin/product/" + item.id}>แก้ไข</Link>
+                    </p>
+                    <p className="bg-red-400 rounded-md p-1 shadow-md" onClick={()=>handleDalete(item.id)}>ลบ</p>
                   </td>
                 </tr>
               );
