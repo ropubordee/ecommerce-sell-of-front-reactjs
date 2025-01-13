@@ -7,20 +7,15 @@ import { Trash2 } from 'lucide-react';
 const FormCategory = () => {
   const token = userEcomStore((state) => state.token);
   const [name, setName] = useState("");
-  const [categoies, setCategories] = useState([]);
+  // const [categoies, setCategories] = useState([]);
+  const categoies = userEcomStore((state)=> state.categories)
+  const getCatgeory = userEcomStore((state)=> state.getCategory)
 
   useEffect(() => {
     getCatgeory(token);
   }, []);
 
-  const getCatgeory = async (token) => {
-    try {
-      const res = await listCategory(token);
-      setCategories(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +62,7 @@ const FormCategory = () => {
           <li className="flex justify-between my-2" key={index}>
             <span>{item.name}</span>
             <button
-            className="bg-red-300"
+            className=""
             onClick={()=> handleRemove(item.id)}
             ><Trash2/></button>
           </li>
