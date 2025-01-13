@@ -1,9 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard } from "lucide-react";
-import { SquareChartGantt } from 'lucide-react';
-import { ChartBarStacked } from 'lucide-react';
-import { ShoppingBasket } from 'lucide-react';
+import { ChartBarStacked, LayoutDashboard, LogOut, ShoppingBasket, SquareChartGantt } from "lucide-react";
+
 
 
 
@@ -82,8 +80,8 @@ const SidebarAdmin = () => {
               : "text-gray-300 px-4 py-2 hover:bg-gray-700 hover:text-white rounded flex items-center"
           }
         >
-          <LayoutDashboard className="mr-2" />
-          Logout
+          <LogOut className="mr-2" />
+           LogOut
         </NavLink>
       </div>
     </div>

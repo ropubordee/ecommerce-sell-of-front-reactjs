@@ -4,6 +4,7 @@ import { createProduct, deleteProduct } from "../../api/product";
 import { toast } from "react-toastify";
 import UploadFile from "./UploadFile";
 import { Link } from "react-router-dom";
+import { Pencil, Trash2 } from "lucide-react";
 
 const initialState = {
   title: "",
@@ -21,11 +22,18 @@ const FormProduct = () => {
   const getProduct = useEcomStore((state) => state.getProduct);
   const products = useEcomStore((state) => state.products);
 
-  const [form, setForm] = useState(initialState);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    categoryId: "",
+    images: [],
+  });
 
   useEffect(() => {
-    getCategory(token);
-    getProduct(token, 100);
+    getCategory();
+    getProduct(100);
   }, []);
 
   const handleOnChange = (e) => {
@@ -41,8 +49,8 @@ const FormProduct = () => {
     try {
       const res = await createProduct(token, form);
       console.log(res);
-      setForm(initialState)
-      getProduct(token)
+      setForm(initialState);
+      getProduct();
       toast.success(`เพิ่มข้อมูล ${res.data.title} สำเร็จ`);
     } catch (error) {
       console.log(error);
@@ -51,15 +59,15 @@ const FormProduct = () => {
 
   const handleDalete = async (id) => {
     console.log(id);
-    if(window.confirm('ยืนยันการลบ')){
-     try {
-        const res = await deleteProduct(token,id)
-        console.log(res)
-        toast.success('Delete สินค้าเรียบร้อยแล้ว')
-        getProduct(token)
-     } catch (error) {
-      console.log(error)
-     }
+    if (window.confirm("ยืนยันการลบ")) {
+      try {
+        const res = await deleteProduct(token, id);
+        console.log(res);
+        toast.success("Delete สินค้าเรียบร้อยแล้ว");
+        getProduct();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -116,12 +124,12 @@ const FormProduct = () => {
 
         <UploadFile form={form} setForm={setForm} />
 
-        <button className="bg-green-600">เพิ่มสินค้า</button>
+        <button className="bg-green-600 p-2 rounded-md shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">เพิ่มสินค้า</button>
 
         <hr />
-        <table className="table">
+        <table className="table w-full border">
           <thead>
-            <tr>
+            <tr className="bg-gray-200 border">
               <th scope="col">#</th>
               <th scope="col">รูปภาพ</th>
               <th scope="col">ชื่อสินค้า</th>
@@ -157,10 +165,18 @@ const FormProduct = () => {
                   <td>{item.sold}</td>
                   <td>{item.updatedAt}</td>
                   <td className=" flex gap-3">
-                    <p className="bg-yellow-400 rounded-md p-1 shadow-md">
-                      <Link to={"/admin/product/" + item.id}>แก้ไข</Link>
+                    <p className="bg-yellow-400 rounded-md p-1 shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">
+                      <Link to={"/admin/product/" + item.id}>
+                        <Pencil />
+                      </Link>
                     </p>
-                    <p className="bg-red-400 rounded-md p-1 shadow-md" onClick={()=>handleDalete(item.id)}>ลบ</p>
+                    <p
+                      className="bg-red-400 rounded-md p-1 shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200"
+                      onClick={() => handleDalete(item.id)}
+                    >
+                      {" "}
+                      <Trash2 />
+                    </p>
                   </td>
                 </tr>
               );
