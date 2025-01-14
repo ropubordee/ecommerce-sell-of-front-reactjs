@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import ProductCard from './componets/card/ProductCard'
 import userEcomStore from './store/Ecom-store'
+import SearchCard from './componets/card/SearchCard'
 
 const Shop = () => {
 
@@ -19,7 +20,7 @@ const Shop = () => {
 
 
       <div className='w-1/4 p-4 bg-gray-100 h-screen'>
-    Searchbar
+    <SearchCard/>
       </div>
 
 
