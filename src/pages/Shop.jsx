@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import ProductCard from './componets/card/ProductCard'
 import userEcomStore from './store/Ecom-store'
 import SearchCard from './componets/card/SearchCard'
+import CartCard from './componets/card/CartCard'
 
 const Shop = () => {
 
@@ -42,8 +43,8 @@ const Shop = () => {
       </div>
 
 
-    <div className='w-1/4 p-4 bg-gray-200 h-screen overflow-y-auto'>
-      Cartv 
+    <div className='w-1/4 p-4 bg-gray-100 h-screen overflow-y-auto'>
+      <CartCard/> 
     </div>
 
 
