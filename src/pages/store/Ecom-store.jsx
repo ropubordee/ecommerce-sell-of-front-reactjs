@@ -3,49 +3,49 @@ import axios from "axios";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { listCategory } from "../api/Category";
 import { listProduct, searchFilters } from "../api/product";
-import _ from 'lodash';
+import _ from "lodash";
 
-const ecomStore = (set,get) => ({
+const ecomStore = (set, get) => ({
   user: null,
   token: null,
   categories: [],
   products: [],
-  carts : [],
- 
+  carts: [],
 
-  actionAddtoCart : async(product)=>{
-    
-    const carts = get().carts 
-    const updateCart = [...carts,{...product,count: 1}]
-    console.log(updateCart)
-    const uniqe = _.unionWith(updateCart,_.isEqual)
+  actionAddtoCart: async (product) => {
+    const carts = get().carts;
+    const updateCart = [...carts, { ...product, count: 1 }];
+    console.log(updateCart);
+    const uniqe = _.unionWith(updateCart, _.isEqual);
     // console.log('Click add in Zustand',carts)
-    
-    
-    set({carts : uniqe})
 
+    set({ carts: uniqe });
   },
 
-  actionUpdateQuantity : (productId,newQuantity)=>{
+  actionUpdateQuantity: (productId, newQuantity) => {
     // console.log('Update Click',productId,newQuantity)
-    set((state)=>({
-      carts : state.carts.map((item)=>
-      item.id === productId
-      ? {...item, count : Math.max(1,newQuantity)}
-      : item
-      )
-    }))
+    set((state) => ({
+      carts: state.carts.map((item) =>
+        item.id === productId
+          ? { ...item, count: Math.max(1, newQuantity) }
+          : item
+      ),
+    }));
   },
 
-  actionRemoveCartProduct : (productId)=>{
-    console.log('remove',productId)
-    set((state)=>({
-      carts : state.carts.filter((item)=>
-        item.id !== productId
-      )
-    }))
+  actionRemoveCartProduct: (productId) => {
+    console.log("remove", productId);
+    set((state) => ({
+      carts: state.carts.filter((item) => item.id !== productId),
+    }));
   },
 
+  getItemDetails: () => {
+    return get().carts.map((item) => ({
+      name: item.title,
+      totalPrice: item.price * item.count,
+    }));
+  },
 
   getTotaPrice : () =>{
     return get().carts.reduce((total,item)=>{
@@ -53,7 +53,21 @@ const ecomStore = (set,get) => ({
     },0)
   },
 
+  getTotaPriceVat: () => {
+    const total = get().carts.reduce((total, item) => {
+      return total + item.price * item.count;
+    }, 0);
 
+    const vat = total * 0.07;
+
+    const totalWithVAT = total + vat;
+
+    return {
+      total: total,
+      vat: vat, 
+      totalWithVAT: totalWithVAT,
+    };
+  },
 
   actionLogin: async (form) => {
     const res = await axios.post("http://localhost:5000/api/login", form);
