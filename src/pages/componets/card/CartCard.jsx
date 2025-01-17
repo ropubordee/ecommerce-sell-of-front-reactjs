@@ -1,13 +1,17 @@
 import React from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import userEcomStore from "../../store/Ecom-store";
-
+import { Link } from 'react-router-dom'
 const CartCard = () => {
   const carts = userEcomStore((state) => state.carts);
   console.log(carts);
   const actionUpdateQuantity = userEcomStore(
     (state) => state.actionUpdateQuantity
   );
+  const actionRemoveCartProduct = userEcomStore(
+    (state) => state.actionRemoveCartProduct
+  );
+  const getTotaPrice = userEcomStore((state) => state.getTotaPrice);
 
   return (
     <div>
@@ -17,18 +21,32 @@ const CartCard = () => {
 
       {carts.map((item, index) => (
         <div key={index} className="w-full bg-white shadow rounded mb-4">
-          <div className="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center">
-            No image
-          </div>
-          <div className="flex justify-end pe-4 ">
-            <button className="text-red-600 pt-3">
-              <Trash2 />
-            </button>
-          </div>
+          {item.images && item.images.length > 0 ? (
+            <div className="flex justify-center ">
+              <img
+                className="w-32 h-36 rounded-md object-cover"
+                src={item.images[0].url}
+                alt="image"
+              />
+            </div>
+          ) : (
+            <div className="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center">
+              No image
+            </div>
+          )}
+            <div className="border border-gray-800" ></div>
           <div className="p-4 flex flex-col items-center w-full">
             <h1 className="text-gray-800 font-bold text-xl text-center">
               {item.title}
             </h1>
+          <div className="flex justify-end pe-4 relative ">
+            <button
+               onClick={() => actionRemoveCartProduct(item.id)}
+              className="text-red-600 pt-3 absolute bottom-1 left-[150px]"
+            >
+              <Trash2 />
+            </button>
+          </div>
             <h1 className="text-gray-400 text-center mt-1">
               {item.description}
             </h1>
@@ -57,11 +75,14 @@ const CartCard = () => {
       ))}
       <div className="flex justify-between w-full">
         <div>รวม</div>
-        <div>120 ฿</div>
+        <div>{getTotaPrice()} ฿</div>
       </div>
-      <button className="py-2 px-4 bg-green-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center">
-        ดำเนินการ
+      <Link to={'/cart'}>
+      <button 
+      className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center">
+        ดำเนินการชำระเงิน
       </button>
+        </Link>
     </div>
   );
 };

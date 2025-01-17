@@ -11,6 +11,7 @@ const ecomStore = (set,get) => ({
   categories: [],
   products: [],
   carts : [],
+ 
 
   actionAddtoCart : async(product)=>{
     
@@ -26,8 +27,33 @@ const ecomStore = (set,get) => ({
   },
 
   actionUpdateQuantity : (productId,newQuantity)=>{
-    console.log('Update Click',productId,newQuantity)
+    // console.log('Update Click',productId,newQuantity)
+    set((state)=>({
+      carts : state.carts.map((item)=>
+      item.id === productId
+      ? {...item, count : Math.max(1,newQuantity)}
+      : item
+      )
+    }))
   },
+
+  actionRemoveCartProduct : (productId)=>{
+    console.log('remove',productId)
+    set((state)=>({
+      carts : state.carts.filter((item)=>
+        item.id !== productId
+      )
+    }))
+  },
+
+
+  getTotaPrice : () =>{
+    return get().carts.reduce((total,item)=>{
+      return total + item.price * item.count
+    },0)
+  },
+
+
 
   actionLogin: async (form) => {
     const res = await axios.post("http://localhost:5000/api/login", form);

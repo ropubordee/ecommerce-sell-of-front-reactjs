@@ -17,7 +17,7 @@ const SearchCard = () => {
   const [ok, setOk] = useState(false);
 
   useEffect(() => {
-    getCategory;
+    getCategory();
   }, []);
 
   useEffect(() => {
