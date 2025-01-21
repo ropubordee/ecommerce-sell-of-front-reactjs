@@ -2,6 +2,8 @@ import React from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import userEcomStore from "../../store/Ecom-store";
 import { Link } from 'react-router-dom'
+import { numberFormat } from "../../utils/number";
+
 const CartCard = () => {
   const carts = userEcomStore((state) => state.carts);
   console.log(carts);
@@ -51,7 +53,7 @@ const CartCard = () => {
               {item.description}
             </h1>
             <p className="text-center text-gray-800 mt-1">
-              ราคา : {item.price * item.count} ฿
+              ราคา : {numberFormat(item.price * item.count)} ฿
             </p>
             <div className="inline-flex items-center mt-2">
               <button
@@ -75,9 +77,9 @@ const CartCard = () => {
       ))}
       <div className="flex justify-between w-full">
         <div>รวม</div>
-        <div>{getTotaPrice()} ฿</div>
+        <div>{numberFormat(getTotaPrice())} ฿</div>
       </div>
-      <div className="text-red-500 text-end text-sm "> ราคานี้ยังไม่รวม Vat 7%</div>
+      {/* <div className="text-red-500 text-end text-sm "> ราคานี้ยังไม่รวม Vat 7%</div> */}
       <Link to={'/cart'}>
       <button 
       className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center">

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { ChartBarStacked, LayoutDashboard, LogOut, ShoppingBasket, SquareChartGantt } from "lucide-react";
+import { ChartBarStacked, LayoutDashboard, LogOut, Logs, ShoppingBasket, SquareChartGantt } from "lucide-react";
 
 
 
@@ -67,6 +67,17 @@ const SidebarAdmin = () => {
         >
           <ShoppingBasket className="mr-2" />
           Product
+        </NavLink>
+        <NavLink
+        to={'orders'}
+          className={({ isActive }) =>
+            isActive
+              ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
+              : "text-gray-300 px-4 py-2 hover:bg-gray-700 hover:text-white rounded flex items-center"
+          }
+        >
+          <Logs className="mr-2" />
+          Orders
         </NavLink>
        
       </nav>

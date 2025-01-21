@@ -29,8 +29,8 @@ const MainNav = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link to={"register"}>Register</Link>
-            <Link to={"login"}>Login</Link>
+            <Link to={"/register"}>Register</Link>
+            <Link to={"/login"}>Login</Link>
           </div>
         </div>
       </div>

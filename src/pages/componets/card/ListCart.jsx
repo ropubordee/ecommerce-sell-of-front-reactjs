@@ -2,8 +2,9 @@ import React from "react";
 import { AlignLeft, Minus, Plus, Trash2 } from "lucide-react";
 import userEcomStore from "../../store/Ecom-store";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserCart} from '../../api/user'
+import { createUserCart } from "../../api/user";
 import { toast } from "react-toastify";
+import { numberFormat } from "../../utils/number";
 
 const ListCart = () => {
   const cart = userEcomStore((state) => state.carts);
@@ -16,34 +17,32 @@ const ListCart = () => {
   );
   const getItemDetails = userEcomStore((state) => state.getItemDetails);
   const totadetail = getItemDetails();
-  const getTotaPrice = userEcomStore((state) => state.getTotaPrice)
+  const getTotaPrice = userEcomStore((state) => state.getTotaPrice);
   const getTotaPriceVat = userEcomStore((state) => state.getTotaPriceVat);
   const { total, vat, totalWithVAT } = getTotaPriceVat();
   const user = userEcomStore((state) => state.user);
   console.log(user);
-  const token = userEcomStore((state) => state.token)
+  const token = userEcomStore((state) => state.token);
 
-  const navigate = useNavigate()
-  const handleSaveCart = async( )=>{
-      await createUserCart(token,{cart})
-      .then((res)=> {
-        console.log(res)
-        toast.success('เพิ่มลงตะกร้าสำเสร็จ')
-        navigate('/checkout')
-
+  const navigate = useNavigate();
+  const handleSaveCart = async () => {
+    await createUserCart(token, { cart })
+      .then((res) => {
+        console.log(res);
+        toast.success("เพิ่มลงตะกร้าสำเสร็จ");
+        navigate("/checkout");
       })
-      .catch((error)=>{
-        console.log(error)
-      })
-  }
+      .catch((error) => {
+        console.log(error);
+        toast.warning(error.response.data.message);
+      });
+  };
 
   return (
     <div className="bg-gray-100 rounded-md p-4">
       <div className="flex gap-4 mb-4">
         <AlignLeft size={36} />
-        <p className="text-2xl font-bold">
-          รายการสินค้า {cart.length} รายการ{" "}
-        </p>
+        <p className="text-2xl font-bold">รายการสินค้า {cart.length} รายการ </p>
       </div>
 
       <div className="grid gird-cols-1 md:grid-cols-3 gap-4">
@@ -76,7 +75,7 @@ const ListCart = () => {
                   <div className="flex flex-col justify-between items-center">
                     <div className="text-2xl text-gray-900 font-bold">ราคา</div>
                     <div className="text-center pb-2 text-gray-900 text-2xl">
-                      ฿{item.price}
+                      ฿{numberFormat(item.price)}
                     </div>
                   </div>
                   <div className="mt-[36px]">X</div>
@@ -113,7 +112,7 @@ const ListCart = () => {
                     </div>
 
                     <div className="text-blue-500 text-xl font-bold">
-                      ฿ {item.price * item.count}
+                      ฿ {numberFormat(item.price * item.count)}
                     </div>
                   </div>
                 </div>
@@ -142,27 +141,25 @@ const ListCart = () => {
                 {item.name}
               </div>
               <div className="text-blue-500 text-xl font-bold text-right">
-                ฿{item.totalPrice}
+                ฿{numberFormat(item.totalPrice)}
               </div>
             </div>
           ))}
 
-         
-
           <div className="flex justify-between text-xl font-bold text-gray-900 mt-4">
             <span>รวมสุทธิ</span>
             <span className="text-2xl text-green-600">
-              ฿{getTotaPrice()}
+              ฿{numberFormat(getTotaPrice())}
             </span>
           </div>
-            <div className="text-red-500 text-end text-sm "> ราคานี้ยังไม่รวม Vat 7%</div>
 
           <div className="flex flex-col gap-4 mt-6">
             {user ? (
-              <Link >
-                <button 
-                onClick={handleSaveCart}
-                className="bg-red-500 w-full rounded-md text-white py-3 shadow-md hover:bg-red-600 transition duration-300">
+              <Link>
+                <button
+                  onClick={handleSaveCart}
+                  className="bg-red-500 w-full rounded-md text-white py-3 shadow-md hover:bg-red-600 transition duration-300"
+                >
                   สั่งซี้อ
                 </button>
               </Link>

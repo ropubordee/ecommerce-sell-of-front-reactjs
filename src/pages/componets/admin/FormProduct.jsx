@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import UploadFile from "./UploadFile";
 import { Link } from "react-router-dom";
 import { Pencil, Trash2 } from "lucide-react";
+import { numberFormat } from "../../utils/number";
+import { dateFormat } from "../../utils/datefrom";
 
 const initialState = {
   title: "",
@@ -124,7 +126,9 @@ const FormProduct = () => {
 
         <UploadFile form={form} setForm={setForm} />
 
-        <button className="bg-green-600 p-2 rounded-md shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">เพิ่มสินค้า</button>
+        <button className="bg-green-600 p-2 rounded-md shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">
+          เพิ่มสินค้า
+        </button>
 
         <hr />
         <table className="table w-full border">
@@ -160,10 +164,10 @@ const FormProduct = () => {
                   </td>
                   <td>{item.title}</td>
                   <td>{item.description}</td>
-                  <td>{item.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.sold}</td>
-                  <td>{item.updatedAt}</td>
+                  <td>{numberFormat(item.price)}</td>
+                  <td className="text-center">{item.quantity}</td>
+                  <td className="text-center">{item.sold}</td>
+                  <td>{dateFormat(item.updatedAt)}</td>
                   <td className=" flex gap-3">
                     <p className="bg-yellow-400 rounded-md p-1 shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">
                       <Link to={"/admin/product/" + item.id}>

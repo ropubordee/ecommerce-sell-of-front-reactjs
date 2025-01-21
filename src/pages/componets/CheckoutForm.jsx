@@ -52,7 +52,7 @@ const token = userEcomStore((state)=>state.token)
 
   return (
     <form className="space-y-6" id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <PaymentElement  id="payment-element" options={paymentElementOptions} />
       <button
         className={`w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-600 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300  ${
           isLoading || !stripe || !elements
