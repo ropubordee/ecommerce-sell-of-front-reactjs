@@ -6,15 +6,21 @@ import {
 } from "@stripe/react-stripe-js";
 import userEcomStore from "../store/Ecom-store";
 import { saveOrder } from "../api/user";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm() {
+  
+  const token = userEcomStore((state) => state.token);
+  const clearCart = userEcomStore((state)=> state.clearCart)
+
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-const token = userEcomStore((state)=>state.token)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,16 +37,25 @@ const token = userEcomStore((state)=>state.token)
       redirect: "if_required",
     });
 
+    console.log("payload", payload);
     if (payload.error) {
       setMessage(payload.message);
+      console.log("error");
+      toast.error(payload.error.message);
+    } else if (payload.paymentIntent.status === "succeeded") {
+      console.log("Ready or Saveorder");
+      saveOrder(token, payload)
+        .then((res) => {
+          console.log(res);
+          clearCart()
+          toast.success("Payment Success");
+          navigate('/user/history')
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
-        saveOrder(token,payload)
-        .then((res)=>{
-            console.log(res)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+      toast.warning("ชำระเงินไม่สำเสร็จ");
     }
 
     setIsLoading(false);
@@ -52,7 +67,7 @@ const token = userEcomStore((state)=>state.token)
 
   return (
     <form className="space-y-6" id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement  id="payment-element" options={paymentElementOptions} />
+      <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         className={`w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-600 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300  ${
           isLoading || !stripe || !elements

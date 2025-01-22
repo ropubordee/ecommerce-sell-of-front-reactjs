@@ -18,13 +18,11 @@ const ListCart = () => {
   const getItemDetails = userEcomStore((state) => state.getItemDetails);
   const totadetail = getItemDetails();
   const getTotaPrice = userEcomStore((state) => state.getTotaPrice);
-  const getTotaPriceVat = userEcomStore((state) => state.getTotaPriceVat);
-  const { total, vat, totalWithVAT } = getTotaPriceVat();
   const user = userEcomStore((state) => state.user);
   console.log(user);
   const token = userEcomStore((state) => state.token);
-
   const navigate = useNavigate();
+
   const handleSaveCart = async () => {
     await createUserCart(token, { cart })
       .then((res) => {
@@ -157,10 +155,13 @@ const ListCart = () => {
             {user ? (
               <Link>
                 <button
+                  disabled={cart.length < 1}
                   onClick={handleSaveCart}
-                  className="bg-red-500 w-full rounded-md text-white py-3 shadow-md hover:bg-red-600 transition duration-300"
+                  className={` w-full rounded-md text-white py-3 shadow-md hover:bg-red-600 transition duration-300
+                    ${cart.length < 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'}
+                    `}
                 >
-                  สั่งซี้อ
+                  {cart.length < 1 ? 'กรุณาเพิ่มสินค้า' : 'สั่งซื้อ'}
                 </button>
               </Link>
             ) : (

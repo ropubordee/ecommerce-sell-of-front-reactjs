@@ -12,6 +12,16 @@ const ecomStore = (set, get) => ({
   products: [],
   carts: [],
 
+  logout: () => {
+    set({
+      user: null,
+      token: null,
+      categories: [],
+      products: [],
+      carts: [],
+    });
+  },
+
   actionAddtoCart: async (product) => {
     const carts = get().carts;
     const updateCart = [...carts, { ...product, count: 1 }];
@@ -47,26 +57,10 @@ const ecomStore = (set, get) => ({
     }));
   },
 
-  getTotaPrice : () =>{
-    return get().carts.reduce((total,item)=>{
-      return total + item.price * item.count
-    },0)
-  },
-
-  getTotaPriceVat: () => {
-    const total = get().carts.reduce((total, item) => {
+  getTotaPrice: () => {
+    return get().carts.reduce((total, item) => {
       return total + item.price * item.count;
     }, 0);
-
-    const vat = total * 0.07;
-
-    const totalWithVAT = total + vat;
-
-    return {
-      total: total,
-      vat: vat, 
-      totalWithVAT: totalWithVAT,
-    };
   },
 
   actionLogin: async (form) => {
@@ -102,6 +96,10 @@ const ecomStore = (set, get) => ({
     } catch (error) {
       console.log(error);
     }
+  },
+
+  clearCart: () => {
+    set({ carts: [] });
   },
 });
 
