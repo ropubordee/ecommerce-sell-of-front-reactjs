@@ -74,47 +74,49 @@ const FormProduct = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white shadow-md">
-      <form onSubmit={handleSubmit}>
-        <h1>เพิ่มข้อมูลสินค้า</h1>
+    <div className="container mx-auto p-8 bg-white shadow-lg rounded-lg">
+    <form onSubmit={handleSubmit}>
+      <h1 className="text-2xl font-bold text-gray-700 mb-6">เพิ่มข้อมูลสินค้า</h1>
+  
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <input
-          className="border"
+          className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.title}
           onChange={handleOnChange}
-          placeholder="Title"
+          placeholder="ชื่อสินค้า"
           name="title"
         />
         <input
-          className="border"
+          className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.description}
           onChange={handleOnChange}
-          placeholder="Description"
+          placeholder="รายละเอียดสินค้า"
           name="description"
         />
         <input
           type="number"
-          className="border"
+          className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.price}
           onChange={handleOnChange}
-          placeholder="Price"
+          placeholder="ราคา"
           name="price"
         />
         <input
-          className="border"
+          className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.quantity}
           onChange={handleOnChange}
-          placeholder="Quantity"
+          placeholder="จำนวนสินค้า"
           name="quantity"
         />
         <select
-          className="border"
+          className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           name="categoryId"
           onChange={handleOnChange}
           required
           value={form.categoryId}
         >
           <option value="" disabled>
-            Please Select
+            กรุณาเลือกหมวดหมู่
           </option>
           {categories.map((item, index) => (
             <option key={index} value={item.id}>
@@ -122,73 +124,79 @@ const FormProduct = () => {
             </option>
           ))}
         </select>
-        <hr />
-
-        <UploadFile form={form} setForm={setForm} />
-
-        <button className="bg-green-600 p-2 rounded-md shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">
+      </div>
+  
+      <UploadFile form={form} setForm={setForm} />
+  
+      <div className="flex justify-end mt-6">
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-6 py-2 rounded-md shadow-md font-medium hover:bg-green-600 hover:scale-105 transition duration-200"
+        >
           เพิ่มสินค้า
         </button>
-
-        <hr />
-        <table className="table w-full border">
-          <thead>
-            <tr className="bg-gray-200 border">
-              <th scope="col">#</th>
-              <th scope="col">รูปภาพ</th>
-              <th scope="col">ชื่อสินค้า</th>
-              <th scope="col">รายละเอียด</th>
-              <th scope="col">ราคา</th>
-              <th scope="col">จำนวน</th>
-              <th scope="col">จำนวนที่ขายได้</th>
-              <th scope="col">วันที่อัพเดต</th>
-              <th scope="col">จัดการ</th>
+      </div>
+  
+      <hr className="my-8 border-gray-300" />
+  
+      <table className="table-auto w-full text-left border-collapse">
+        <thead className="bg-gray-100 border-b">
+          <tr>
+            <th className="px-4 py-2">#</th>
+            <th className="px-4 py-2">รูปภาพ</th>
+            <th className="px-4 py-2">ชื่อสินค้า</th>
+            <th className="px-4 py-2">รายละเอียด</th>
+            <th className="px-4 py-2">ราคา</th>
+            <th className="px-4 py-2">จำนวน</th>
+            <th className="px-4 py-2">จำนวนที่ขายได้</th>
+            <th className="px-4 py-2">วันที่อัพเดต</th>
+            <th className="px-4 py-2">จัดการ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((item, index) => (
+            <tr key={index} className="border-b hover:bg-gray-50">
+              <td className="px-4 py-2">{index + 1}</td>
+              <td className="px-4 py-2">
+                {item.images.length > 0 ? (
+                  <img
+                    className="w-16 h-16 rounded-md object-cover shadow-sm"
+                    src={item.images[0].url}
+                    alt="Product"
+                  />
+                ) : (
+                  <div className="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center shadow-sm text-gray-500">
+                    ไม่มีรูปภาพ
+                  </div>
+                )}
+              </td>
+              <td className="px-4 py-2">{item.title}</td>
+              <td className="px-4 py-2">{item.description}</td>
+              <td className="px-4 py-2">{numberFormat(item.price)}</td>
+              <td className="px-4 py-2 text-center">{item.quantity}</td>
+              <td className="px-4 py-2 text-center">{item.sold}</td>
+              <td className="px-4 py-2">{dateFormat(item.updatedAt)}</td>
+              <td className="px-4 py-2 flex gap-2">
+                <Link
+                  to={`/admin/product/${item.id}`}
+                  className="bg-yellow-400 text-white px-3 py-1 rounded-md shadow-md hover:bg-yellow-500 hover:scale-105 transition duration-200"
+                >
+                  <Pencil />
+                </Link>
+                <button
+                  className="bg-red-500 text-white px-3 py-1 rounded-md shadow-md hover:bg-red-600 hover:scale-105 transition duration-200"
+                  onClick={() => handleDalete(item.id)}
+                >
+                  <Trash2 />
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {products.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>
-                    {item.images.length > 0 ? (
-                      <img
-                        className="w-24 h-24 rounded-lg shadow-md"
-                        src={item.images[0].url}
-                      />
-                    ) : (
-                      <div className="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center shadow-sm">
-                        No image
-                      </div>
-                    )}
-                  </td>
-                  <td>{item.title}</td>
-                  <td>{item.description}</td>
-                  <td>{numberFormat(item.price)}</td>
-                  <td className="text-center">{item.quantity}</td>
-                  <td className="text-center">{item.sold}</td>
-                  <td>{dateFormat(item.updatedAt)}</td>
-                  <td className=" flex gap-3">
-                    <p className="bg-yellow-400 rounded-md p-1 shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200">
-                      <Link to={"/admin/product/" + item.id}>
-                        <Pencil />
-                      </Link>
-                    </p>
-                    <p
-                      className="bg-red-400 rounded-md p-1 shadow-md hover:scale-105 hover:translate-y-1 hover:duration-200"
-                      onClick={() => handleDalete(item.id)}
-                    >
-                      {" "}
-                      <Trash2 />
-                    </p>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </form>
-    </div>
+          ))}
+        </tbody>
+      </table>
+    </form>
+  </div>
+  
   );
 };
 

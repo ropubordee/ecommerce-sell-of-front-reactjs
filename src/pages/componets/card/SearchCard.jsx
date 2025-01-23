@@ -15,7 +15,7 @@ const SearchCard = () => {
   const categories = userEcomStore((state) => state.categories);
   const [text, setText] = useState("");
   const [categorySelecated, setCategorySelected] = useState([]);
-  const [price, setPrice] = useState([1000, 30000]);
+  const [price, setPrice] = useState([0, 30000]);
   const [ok, setOk] = useState(false);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ const SearchCard = () => {
             range
             min={0}
             max={10000}
-            defaultValue={[1000, 30000]}
+            defaultValue={[0, 30000]}
           />
         </div>
       </div>

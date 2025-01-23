@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AlignLeft, Minus, Plus, Trash2 } from "lucide-react";
 import userEcomStore from "../../store/Ecom-store";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,6 +22,15 @@ const ListCart = () => {
   console.log(user);
   const token = userEcomStore((state) => state.token);
   const navigate = useNavigate();
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const setTimedisable = () => {
+    setIsDisabled(true);
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 5000);
+  };
 
   const handleSaveCart = async () => {
     await createUserCart(token, { cart })
@@ -47,85 +56,79 @@ const ListCart = () => {
         <div className="col-span-2 ">
           <div className="border border-gray-800 "></div>
           {cart.map((item, index) => (
-            <div key={index} className="w-full bg-white shadow rounded mb-4">
-              <div className="p-4 flex flex-row gap-6 items-center w-full">
-                {item.images && item.images.length > 0 ? (
-                  <img
-                    className="w-32 h-36 rounded-md object-cover"
-                    src={item.images[0].url}
-                    alt="image"
-                  />
-                ) : (
-                  <div className="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center">
-                    No image
-                  </div>
-                )}
-                <div className="w-full">
-                  <h1 className="text-gray-900 font-bold text-xl text-center">
-                    {item.title}
-                  </h1>
-                  <h1 className="text-gray-500 text-center mt-1">
-                    {item.description}
-                  </h1>
-                </div>
+           <div key={index} className="w-full bg-white shadow-lg rounded-lg p-6 mb-6">
+           <div className="flex flex-wrap items-center gap-6">
+      
+             {item.images && item.images.length > 0 ? (
+               <img
+                 className="w-32 h-36 rounded-md object-cover"
+                 src={item.images[0].url}
+                 alt="image"
+               />
+             ) : (
+               <div className="w-32 h-36 bg-gray-200 flex items-center justify-center rounded-md">
+                 <span className="text-gray-500">No Image</span>
+               </div>
+             )}
+         
+             <div className="flex-1">
+               <h2 className="text-lg font-semibold text-gray-800 truncate">{item.title}</h2>
+               <p className="text-sm text-gray-500 mt-1 ">{item.description}</p>
+               <div className="mt-3">
+                 <span className="text-gray-700 font-medium">Price:</span>{" "}
+                 <span className="text-blue-600 font-bold text-lg text-nowrap">฿{numberFormat(item.price)}</span>
+               </div>
+             </div>
+         
+        
+             <div className="flex items-center gap-4">
+               <div className="flex items-center">
+                 <button
+                   disabled={item.count <= 1}
+                   onClick={() => actionUpdateQuantity(item.id, item.count - 1)}
+                   className="w-8 h-8 bg-gray-100 text-gray-600 rounded-l border hover:bg-gray-200 disabled:opacity-50 flex items-center justify-center"
+                 >
+                   <Minus size={16} />
+                 </button>
+                 <div className="w-10 text-center bg-gray-50 border-y">{item.count}</div>
+                 <button
+                   disabled={isDisabled || item.count >= item.quantity}
+                   onClick={() => {
+                     if (item.count >= item.quantity) {
+                       toast.error(`จำนวนสินค้าทั้งหมดมี ${item.quantity} ชิ้น`);
+                       setTimedisable();
+                       return;
+                     }
+                     actionUpdateQuantity(item.id, item.count + 1);
+                   }}
+                   className="w-8 h-8 bg-gray-100 text-gray-600 rounded-r border hover:bg-gray-200 disabled:opacity-50 flex items-center justify-center"
+                 >
+                   <Plus size={16} />
+                 </button>
+               </div>
+               <p className="text-sm text-gray-500">
+                 Stock: <span className="font-semibold">{item.quantity}</span>
+               </p>
+             </div>
+         
 
-                <div className="flex justify-between w-full gap-5">
-                  <div className="flex flex-col justify-between items-center">
-                    <div className="text-2xl text-gray-900 font-bold">ราคา</div>
-                    <div className="text-center pb-2 text-gray-900 text-2xl">
-                      ฿{numberFormat(item.price)}
-                    </div>
-                  </div>
-                  <div className="mt-[36px]">X</div>
-                  <div className="flex flex-col items-center justify-between">
-                    <div className="text-xl text-blue-600 font-bold">จำนวน</div>
-                    <div className="flex flex-row">
-                      <button
-                        onClick={() =>
-                          actionUpdateQuantity(item.id, item.count - 1)
-                        }
-                        className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
-                      >
-                        <Minus size={20} />
-                      </button>
-                      <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-800 inline-flex items-center px-4 py-1 select-none">
-                        {item.count}
-                      </div>
-                      <button
-                        onClick={() =>
-                          actionUpdateQuantity(item.id, item.count + 1)
-                        }
-                        className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
-                      >
-                        <Plus size={20} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-full flex flex-col pb-4 justify-between">
-                  <div className="text-center ">
-                    <div className="text-gray-900 font-bold text-2xl">
-                      ราคารวม
-                    </div>
-
-                    <div className="text-blue-500 text-xl font-bold">
-                      ฿ {numberFormat(item.price * item.count)}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-end pe-4 mb-4 ">
-                    <button
-                      onClick={() => actionRemoveCartProduct(item.id)}
-                      className="text-red-500 pt-3  hover:text-red-700"
-                    >
-                      <Trash2 size={40} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+             <div className="truncate">
+               <h3 className="text-lg font-semibold text-gray-800">Total:</h3>
+               <p className="text-blue-600 font-bold text-lg">
+                 ฿{numberFormat(item.price * item.count)}
+               </p>
+             </div>
+         
+        
+             <button
+               onClick={() => actionRemoveCartProduct(item.id)}
+               className="text-red-500 hover:text-red-600 transition-colors"
+             >
+               <Trash2 size={30} />
+             </button>
+           </div>
+         </div>
+         
           ))}
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg space-y-6">
@@ -158,10 +161,14 @@ const ListCart = () => {
                   disabled={cart.length < 1}
                   onClick={handleSaveCart}
                   className={` w-full rounded-md text-white py-3 shadow-md hover:bg-red-600 transition duration-300
-                    ${cart.length < 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'}
+                    ${
+                      cart.length < 1
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-red-500 hover:bg-red-600"
+                    }
                     `}
                 >
-                  {cart.length < 1 ? 'กรุณาเพิ่มสินค้า' : 'สั่งซื้อ'}
+                  {cart.length < 1 ? "กรุณาเพิ่มสินค้า" : "สั่งซื้อ"}
                 </button>
               </Link>
             ) : (

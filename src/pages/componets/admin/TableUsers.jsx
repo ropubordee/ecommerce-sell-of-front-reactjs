@@ -52,52 +52,61 @@ const TableUsers = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-white shadow-md">
-      <table className=" w-full">
-        <thead>
-          <tr>
-            <th>ลำดับ</th>
-            <th>Email</th>
-            <th>วันที่สมัคร</th>
-            <th>วันที่แก้ไขล่าสุด</th>
-            <th>สิทธิ์</th>
-            <th>สถานะ</th>
-            <th>จัดการ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {user?.map((item, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.email}</td>
-              <td>{dateFormat(item.createdAt)}</td>
-              <td>{dateFormat(item.updatedAt)}</td>
-
-
-              <td>
-               
-                <select 
-                onChange={(e)=>handleChangeUserRole(item.id,e.target.value)}
-                value={item.role}>
-                    <option >user</option>
-                    <option >admin</option>
-                </select>
-                </td>
-
-
-              <td>{item.enabled ? "Active" : "Inactive"}</td>
-              <td>
-                <button 
-                className="bg-yellow-400 p-1 rounded-md shadow-md"
-                onClick={()=>handleChangeUserStatus(item.id,item.enabled)}> 
+    <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <table className="min-w-full table-auto bg-white border-collapse">
+      <thead>
+        <tr className="bg-gray-100 text-gray-700 text-sm">
+          <th className="px-4 py-2 border-b">ลำดับ</th>
+          <th className="px-4 py-2 border-b">Email</th>
+          <th className="px-4 py-2 border-b">วันที่สมัคร</th>
+          <th className="px-4 py-2 border-b">วันที่แก้ไขล่าสุด</th>
+          <th className="px-4 py-2 border-b">สิทธิ์</th>
+          <th className="px-4 py-2 border-b">สถานะ</th>
+          <th className="px-4 py-2 border-b">จัดการ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {user?.map((item, index) => (
+          <tr key={index} className="hover:bg-gray-50">
+            <td className="px-4 py-2 border-b text-center">{index + 1}</td>
+            <td className="px-4 py-2 border-b">{item.email}</td>
+            <td className="px-4 py-2 border-b">{dateFormat(item.createdAt)}</td>
+            <td className="px-4 py-2 border-b">{dateFormat(item.updatedAt)}</td>
+  
+            <td className="px-4 py-2 border-b">
+              <select
+                onChange={(e) => handleChangeUserRole(item.id, e.target.value)}
+                value={item.role}
+                className="p-1 border rounded-md text-gray-700"
+              >
+                <option>user</option>
+                <option>admin</option>
+              </select>
+            </td>
+  
+            <td className="px-4 py-2 border-b text-center">
+              {item.enabled ? (
+                <span className="text-green-500">Active</span>
+              ) : (
+                <span className="text-red-500">Inactive</span>
+              )}
+            </td>
+            <td className="px-4 py-2 border-b text-center">
+              <button
+                className={`p-2 rounded-md shadow-md text-white ${
+                  item.enabled ? 'bg-yellow-500' : 'bg-green-500'
+                }`}
+                onClick={() => handleChangeUserStatus(item.id, item.enabled)}
+              >
                 {item.enabled ? 'Disable' : 'Enable'}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  
   );
 };
 

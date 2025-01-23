@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import userEcomStore from "../store/Ecom-store";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CircleUserRound, LogIn } from "lucide-react";
 
 const MainNav = () => {
   const carts = userEcomStore((state) => state.carts);
@@ -21,7 +21,11 @@ const MainNav = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center gap-6 w-full">
             <Link to={"/"} className="text-2xl font-bold">
-              LOGO
+              <img
+                className="w-20 rounded-full"
+                src="https://cdn.iconscout.com/icon/free/png-512/free-javascript-logo-icon-download-in-svg-png-gif-file-formats--social-media-technology-brand-pack-logos-icons-4406693.png?f=webp&w=256"
+                alt=""
+              />
             </Link>
             <NavLink
               className={({ isActive }) =>
@@ -81,7 +85,7 @@ const MainNav = () => {
               </button>
 
               {isOpen && (
-                <div className="absolute top-16 mt-2 bg-white shadow-md">
+                <div className="absolute top-16 mt-2 bg-white shadow-md z-50">
                   <Link
                     to={"/user/history"}
                     className="block px-4 py-2 hover:bg-gray-200"
@@ -90,8 +94,8 @@ const MainNav = () => {
                   </Link>
 
                   <Link
-                    to={'/login'}
                     onClick={() => logout()}
+                    to={"/login"}
                     className="block px-4 py-2 hover:bg-gray-200"
                   >
                     Logout
@@ -109,7 +113,10 @@ const MainNav = () => {
                 }
                 to={"/register"}
               >
-                Register
+                <div className="flex gap-1">
+                  <CircleUserRound />
+                  <p className="">Register</p>
+                </div>
               </NavLink>
 
               <NavLink
@@ -120,7 +127,10 @@ const MainNav = () => {
                 }
                 to={"/login"}
               >
-                Login
+                <div className="flex gap-1">
+                  <LogIn />
+                  <p className="">Login</p>
+                </div>
               </NavLink>
             </div>
           )}

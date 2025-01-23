@@ -1,12 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { ChartBarStacked, LayoutDashboard, LogOut, Logs, ShoppingBasket, SquareChartGantt } from "lucide-react";
+import {
+  ChartBarStacked,
+  LayoutDashboard,
+  LogOut,
+  Logs,
+  ShoppingBasket,
+  SquareChartGantt,
+} from "lucide-react";
 
-
-
-
+import userEcomStore from "../../store/Ecom-store";
 
 const SidebarAdmin = () => {
+  const logout = userEcomStore((state) => state.logout);
+
   return (
     <div
       className="w-64 bg-gray-700 text-gray-100 
@@ -21,8 +28,8 @@ const SidebarAdmin = () => {
 
       <nav className="flex-1 py-4 px-4 space-y-2">
         <NavLink
-        to={'/admin'}
-        end
+          to={"/admin"}
+          end
           className={({ isActive }) =>
             isActive
               ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
@@ -33,7 +40,7 @@ const SidebarAdmin = () => {
           Dashboard
         </NavLink>
         <NavLink
-        to={'manage'}
+          to={"manage"}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
@@ -44,9 +51,8 @@ const SidebarAdmin = () => {
           Manage
         </NavLink>
 
-
         <NavLink
-        to={'category'}
+          to={"category"}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
@@ -58,7 +64,7 @@ const SidebarAdmin = () => {
         </NavLink>
 
         <NavLink
-        to={'product'}
+          to={"product"}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
@@ -69,7 +75,7 @@ const SidebarAdmin = () => {
           Product
         </NavLink>
         <NavLink
-        to={'orders'}
+          to={"orders"}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
@@ -79,12 +85,12 @@ const SidebarAdmin = () => {
           <Logs className="mr-2" />
           Orders
         </NavLink>
-       
       </nav>
 
       <div>
-      <NavLink
-      
+        <NavLink
+          onClick={() => logout()}
+          to={"/login"}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-800 rounded-md text-white px-4 py-2 hover:bg-gray-500 flex items-center"
@@ -92,7 +98,7 @@ const SidebarAdmin = () => {
           }
         >
           <LogOut className="mr-2" />
-           LogOut
+          LogOut
         </NavLink>
       </div>
     </div>
