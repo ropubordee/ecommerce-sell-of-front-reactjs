@@ -51,7 +51,7 @@ const Register = () => {
     // }
     console.log("ok");
     try {
-      const res = await axios.post("http://localhost:5000/api/register", data);
+      const res = await axios.post("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/register", data);
       console.log(res);
       toast.success(res.data);
       navigate('/login')

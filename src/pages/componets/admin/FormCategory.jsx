@@ -18,7 +18,7 @@ const FormCategory = () => {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+
     if (!name) {
       return toast.warning("Please fill data");
     }

@@ -64,7 +64,7 @@ const ecomStore = (set, get) => ({
   },
 
   actionLogin: async (form) => {
-    const res = await axios.post("http://localhost:5000/api/login", form);
+    const res = await axios.post("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/login", form);
     console.log(res.data.token);
     set({
       user: res.data.payload,

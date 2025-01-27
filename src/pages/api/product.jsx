@@ -1,25 +1,25 @@
 import axios from "axios";
 
 export const createProduct = async (token, form) => {
-  return axios.post("http://localhost:5000/api/product", form, {
+  return axios.post("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/product", form, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 };
 export const listProduct = async (count = 20) => {
-  return axios.get("http://localhost:5000/api/products/" + count);
+  return axios.get("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/products/" + count);
 };
 
 export const readProduct = async (token, id) => {
-  return axios.get("http://localhost:5000/api/product/" + id, {
+  return axios.get("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/product/" + id, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 };
 export const deleteProduct = async (token, id) => {
-  return axios.delete("http://localhost:5000/api/product/" + id, {
+  return axios.delete("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/product/" + id, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -27,7 +27,7 @@ export const deleteProduct = async (token, id) => {
 };
 
 export const updateProduct = async (token, id, form) => {
-  return axios.put("http://localhost:5000/api/product/" + id, form, {
+  return axios.put("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/product/" + id, form, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -36,7 +36,7 @@ export const updateProduct = async (token, id, form) => {
 
 export const uploadFiles = async (token, data) => {
   return axios.post(
-    "http://localhost:5000/api/images",
+    "https://ecommerce-sell-of-backend-nodejs.vercel.app/api/images",
     {
       image: data,
     },
@@ -50,7 +50,7 @@ export const uploadFiles = async (token, data) => {
 
 export const removeFiles = async (token, public_id) => {
   return axios.post(
-    "http://localhost:5000/api/removeimages",
+    "https://ecommerce-sell-of-backend-nodejs.vercel.app/api/removeimages",
     {
       public_id,
     },
@@ -63,11 +63,11 @@ export const removeFiles = async (token, public_id) => {
 };
 
 export const searchFilters = async (arg) => {
-  return axios.post("http://localhost:5000/api/search/filters/", arg);
+  return axios.post("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/search/filters/", arg);
 };
 
 export const listProductBy = async (sort, orderBy, limit) => {
-  return axios.post("http://localhost:5000/api/productby", {
+  return axios.post("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/productby", {
     sort,
     orderBy,
     limit,
