@@ -45,6 +45,7 @@ const FormProduct = () => {
       [e.target.name]: e.target.value,
     });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +87,7 @@ const FormProduct = () => {
           placeholder="ชื่อสินค้า"
           name="title"
         />
-        <input
+        <textarea
           className="border px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           value={form.description}
           onChange={handleOnChange}

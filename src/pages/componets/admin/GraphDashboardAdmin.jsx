@@ -28,10 +28,13 @@ const GraphDashboardAdmin = () => {
   );
   const totalSold = products.reduce((sum, product) => sum + product.sold, 0);
 
+  const totaproductall = totalSold + totalQuantity
+
   const db = {
     สินค้าทั้งหมด: products.length,
     ยอดขายสินค้า: totalSold,
     สินค้าที่เหลือในสต็อก: totalQuantity,
+    จำนวนสินค้าทั้งหมด: totaproductall,
   };
 
   const options = {
@@ -66,6 +69,11 @@ const GraphDashboardAdmin = () => {
         label: "สินค้าที่เหลือในสต็อก",
         data: [db.สินค้าที่เหลือในสต็อก],
         backgroundColor: "rgba(255, 159, 64, 0.5)",
+      },
+      {
+        label: "จำนวนทั้งหมดของสินค้า",
+        data: [db.จำนวนสินค้าทั้งหมด],
+        backgroundColor: "rgba(255, 112, 64, 0.5)",
       },
     ],
   };

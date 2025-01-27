@@ -23,7 +23,7 @@ const MainNav = () => {
             <Link to={"/"} className="text-2xl font-bold">
               <img
                 className="w-20 rounded-full"
-                src="https://cdn.iconscout.com/icon/free/png-512/free-javascript-logo-icon-download-in-svg-png-gif-file-formats--social-media-technology-brand-pack-logos-icons-4406693.png?f=webp&w=256"
+                src="https://dynamic.design.com/asset/logo/74349821-dd2c-4a29-bce9-ba57a6993fdc/logo-search-grid-2x?logoTemplateVersion=2&v=638374309021630000&text=TechGear+Hub"
                 alt=""
               />
             </Link>

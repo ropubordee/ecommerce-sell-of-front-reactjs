@@ -96,13 +96,13 @@ const TableOrders = () => {
                     {item.orderStatus}
                   </span>
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-4 py-2 ">
                   <select
                     value={item.orderStatus}
                     onChange={(e) =>
                       handleChangeOrderStatus(token, item.id, e.target.value)
                     }
-                    className="px-3 py-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="px-3 py-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 "
                   >
                     <option>Not Process</option>
                     <option>Processing</option>

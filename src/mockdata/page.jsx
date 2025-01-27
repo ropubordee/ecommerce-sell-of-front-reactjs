@@ -11,13 +11,14 @@ import img10 from '../mockdata/10.png';
 import img11 from '../mockdata/11.png';
 import img12 from '../mockdata/12.png';
 import img13 from '../mockdata/13.png';
+import img14 from '../mockdata/14.png';
 
 
 export const mockDataImage1 = [
     {
       id: 1,
       name: "Laptop",
-      image: img1, 
+      image: img14, 
       price: 1500,
     },
     {
@@ -42,6 +43,12 @@ export const mockDataImage1 = [
       id: 5,
       name: "Smartwatch",
       image: img5,
+      price: 300,
+    },
+    {
+      id: 5,
+      name: "Smartwatch",
+      image: img1,
       price: 300,
     },
   ];

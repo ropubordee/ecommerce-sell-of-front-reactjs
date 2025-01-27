@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import zxcvbn from "zxcvbn";
+import { useNavigate } from "react-router-dom";
 
 const registerSchema = z
   .object({
@@ -18,6 +19,9 @@ const registerSchema = z
   });
 
 const Register = () => {
+ 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -50,6 +54,7 @@ const Register = () => {
       const res = await axios.post("http://localhost:5000/api/register", data);
       console.log(res);
       toast.success(res.data);
+      navigate('/login')
     } catch (error) {
       const errMsg = error.response?.data?.message;
       toast.error(errMsg);

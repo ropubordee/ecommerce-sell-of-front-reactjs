@@ -3,6 +3,7 @@ import { getOrder } from "../../api/user";
 import userEcomStore from "../../store/Ecom-store";
 import { dateFormat } from "../../utils/datefrom";
 import { numberFormat } from "../../utils/number";
+import InvoicePDF from "../PDF/InvoicePDF"
 
 const HistoryCard = () => {
   const [orders, setOrders] = useState([]);
@@ -45,15 +46,21 @@ const HistoryCard = () => {
         {/* Card */}
 
         {orders?.map((item, index) => {
-          // console.log(item)
+          console.log(item)
           return (
             <div
               key={index}
               className="bg-white p-6 rounded-lg shadow-lg border border-gray-200"
             >
               {/* Header */}
+              <div className="flex justify-end">
+                    <div>
+                      <InvoicePDF orders={orders} selectedOrderId={item.id} cartTotal={item.cartTotal}/>
+                    </div>
+                  </div>
               <div className="flex justify-between items-center mb-4">
                 <div>
+                 
                   <p className="text-sm text-gray-500">Order Date</p>
                   <p className="text-lg font-semibold text-gray-700">
                     {dateFormat(item.updatedAt)}
