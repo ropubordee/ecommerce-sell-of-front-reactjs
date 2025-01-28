@@ -17,7 +17,7 @@ const ProductCard = ({ item }) => {
     }}
   >
     <div className="border rounded-lg shadow-lg p-4 w-56 bg-white hover:shadow-xl transform hover:scale-105 transition duration-300">
-      {/* รูปภาพสินค้า */}
+   
       <div className="relative">
         {item.images && item.images.length > 0 ? (
           <img
@@ -37,7 +37,7 @@ const ProductCard = ({ item }) => {
         )}
       </div>
   
-      {/* ข้อมูลสินค้า */}
+    
       <div className="py-4">
         <h3 className="text-lg font-bold text-gray-800 truncate">{item.title}</h3>
         <p className="text-sm text-gray-500 truncate">{item.description}</p>
@@ -49,7 +49,7 @@ const ProductCard = ({ item }) => {
         </div>
       </div>
   
-      {/* ราคาและปุ่มเพิ่มลงตะกร้า */}
+ 
       <div className="flex justify-between items-center">
         <span className="text-lg font-bold text-blue-600">{numberFormat(item.price)} ฿</span>
         {item.quantity > 0 && (

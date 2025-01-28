@@ -70,56 +70,59 @@ const SearchCard = () => {
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto space-y-6">
-    {/* Header */}
-    <div>
-      <h1 className="text-2xl font-bold text-gray-800">ค้นหาสินค้า</h1>
-      <input
-        className="mt-4 border border-gray-300 rounded-md w-full p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        onChange={(e) => setText(e.target.value)}
-        type="text"
-        placeholder="ค้นหาสินค้า..."
-      />
-    </div>
-    <hr className="border-gray-200" />
-  
-    {/* Categories */}
-    <div>
-      <h2 className="text-xl font-semibold text-gray-700">หมวดหมู่สินค้า</h2>
-      <div className="space-y-2 mt-4">
-        {categories.map((item, index) => (
-          <div className="flex items-center gap-2" key={index}>
-            <input
-              className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              onChange={handleCheck}
-              value={item.id}
-              type="checkbox"
-            />
-            <label className="text-gray-700">{item.name}</label>
-          </div>
-        ))}
-      </div>
-    </div>
-    <hr className="border-gray-200" />
-  
-    {/* Price Filter */}
-    <div>
-      <h2 className="text-xl font-semibold text-gray-700">ค้นหาราคา</h2>
-      <div className="mt-4 space-y-4">
-        <div className="flex justify-between text-gray-600">
-          <span>ต่ำสุด: <span className="font-medium">{numberFormat(price[0])}</span></span>
-          <span>สูงสุด: <span className="font-medium">{numberFormat(price[1])}</span></span>
-        </div>
-        <Slider
-          onChange={handlePrice}
-          range
-          min={0}
-          max={10000}
-          defaultValue={[0, 30000]}
-          className="mt-2"
+      <div>
+        <h1 className="text-2xl font-bold text-gray-800">ค้นหาสินค้า</h1>
+        <input
+          className="mt-4 border border-gray-300 rounded-md w-full p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          onChange={(e) => setText(e.target.value)}
+          type="text"
+          placeholder="ค้นหาสินค้า..."
         />
       </div>
+      <hr className="border-gray-200" />
+
+      <div>
+        <h2 className="text-xl font-semibold text-gray-700">หมวดหมู่สินค้า</h2>
+        <div className="space-y-2 mt-4">
+          {categories.map((item, index) => (
+            <div className="flex items-center gap-2" key={index}>
+              <input
+                className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                onChange={handleCheck}
+                value={item.id}
+                type="checkbox"
+              />
+              <label className="text-gray-700">{item.name}</label>
+            </div>
+          ))}
+        </div>
+      </div>
+      <hr className="border-gray-200" />
+
+      <div>
+        <h2 className="text-xl font-semibold text-gray-700">ค้นหาราคา</h2>
+        <div className="mt-4 space-y-4">
+          <div className="flex justify-between text-gray-600">
+            <span>
+              ต่ำสุด:{" "}
+              <span className="font-medium">{numberFormat(price[0])}</span>
+            </span>
+            <span>
+              สูงสุด:{" "}
+              <span className="font-medium">{numberFormat(price[1])}</span>
+            </span>
+          </div>
+          <Slider
+            onChange={handlePrice}
+            range
+            min={0}
+            max={10000}
+            defaultValue={[0, 30000]}
+            className="mt-2"
+          />
+        </div>
+      </div>
     </div>
-  </div>
   );
 };
 
