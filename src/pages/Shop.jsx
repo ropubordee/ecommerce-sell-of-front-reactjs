@@ -13,24 +13,32 @@ const Shop = () => {
   }, []);
 
   return (
-    <div className="flex">
-      <div className="w-1/4 p-4 bg-gray-100 h-screen">
-        <SearchCard />
-      </div>
-
-      <div className="w-1/2 p-4 h-screen overflow-y-auto">
-        <p className="text-2xl font-bold mb-4 text-center"> สินค้าทั้งหมด</p>
-        <div className="flex flex-wrap gap-6 justify-center w-full items-center">
-          {products.map((item, index) => (
-            <ProductCard key={index} item={item} />
-          ))}
-        </div>
-      </div>
-
-      <div className="w-1/4 p-4 bg-gray-100 h-screen overflow-y-auto">
-        <CartCard />
+    <div className="flex h-screen bg-gray-50">
+    {/* Sidebar for Search */}
+    <div className="w-1/4 p-4 bg-white shadow-md h-full">
+      <h2 className="text-xl font-bold text-gray-700 mb-4">ค้นหาสินค้า</h2>
+      <SearchCard />
+    </div>
+  
+    {/* Main Product Display */}
+    <div className="w-1/2 p-6 h-full overflow-y-auto bg-gray-50">
+      <p className="text-2xl font-bold mb-6 text-center text-gray-800">
+        สินค้าทั้งหมด
+      </p>
+      <div className="grid grid-cols-2 gap-6">
+        {products.map((item, index) => (
+          <ProductCard key={index} item={item} />
+        ))}
       </div>
     </div>
+  
+    {/* Cart Sidebar */}
+    <div className="w-1/4 p-4 bg-white shadow-md h-full overflow-y-auto">
+      <h2 className="text-xl font-bold text-gray-700 mb-4">ตะกร้าสินค้า</h2>
+      <CartCard />
+    </div>
+  </div>
+  
   );
 };
 
