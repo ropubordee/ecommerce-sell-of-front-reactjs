@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 const LoadingToRedirect = () => {
 
-    const [count , setCount] = useState(5)
+    const [count , setCount] = useState(10)
     const [redirect , setRedirect] = useState(false)
     
     useEffect(()=>{
