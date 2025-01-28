@@ -8,7 +8,7 @@ import { numberFormat } from "../../utils/number";
 
 const ListCart = () => {
   const cart = userEcomStore((state) => state.carts);
-  console.log(cart);
+
   const actionUpdateQuantity = userEcomStore(
     (state) => state.actionUpdateQuantity
   );
@@ -19,7 +19,6 @@ const ListCart = () => {
   const totadetail = getItemDetails();
   const getTotaPrice = userEcomStore((state) => state.getTotaPrice);
   const user = userEcomStore((state) => state.user);
-  console.log(user);
   const token = userEcomStore((state) => state.token);
   const navigate = useNavigate();
 
@@ -56,79 +55,92 @@ const ListCart = () => {
         <div className="col-span-2 ">
           <div className="border border-gray-800 "></div>
           {cart.map((item, index) => (
-           <div key={index} className="w-full bg-white shadow-lg rounded-lg p-6 mb-6">
-           <div className="flex flex-wrap items-center gap-6">
-      
-             {item.images && item.images.length > 0 ? (
-               <img
-                 className="w-32 h-36 rounded-md object-cover"
-                 src={item.images[0].url}
-                 alt="image"
-               />
-             ) : (
-               <div className="w-32 h-36 bg-gray-200 flex items-center justify-center rounded-md">
-                 <span className="text-gray-500">No Image</span>
-               </div>
-             )}
-         
-             <div className="flex-1">
-               <h2 className="text-lg font-semibold text-gray-800 truncate">{item.title}</h2>
-               <p className="text-sm text-gray-500 mt-1 ">{item.description}</p>
-               <div className="mt-3">
-                 <span className="text-gray-700 font-medium">Price:</span>{" "}
-                 <span className="text-blue-600 font-bold text-lg text-nowrap">฿{numberFormat(item.price)}</span>
-               </div>
-             </div>
-         
-        
-             <div className="flex items-center gap-4">
-               <div className="flex items-center">
-                 <button
-                   disabled={item.count <= 1}
-                   onClick={() => actionUpdateQuantity(item.id, item.count - 1)}
-                   className="w-8 h-8 bg-gray-100 text-gray-600 rounded-l border hover:bg-gray-200 disabled:opacity-50 flex items-center justify-center"
-                 >
-                   <Minus size={16} />
-                 </button>
-                 <div className="w-10 text-center bg-gray-50 border-y">{item.count}</div>
-                 <button
-                   disabled={isDisabled || item.count >= item.quantity}
-                   onClick={() => {
-                     if (item.count >= item.quantity) {
-                       toast.error(`จำนวนสินค้าทั้งหมดมี ${item.quantity} ชิ้น`);
-                       setTimedisable();
-                       return;
-                     }
-                     actionUpdateQuantity(item.id, item.count + 1);
-                   }}
-                   className="w-8 h-8 bg-gray-100 text-gray-600 rounded-r border hover:bg-gray-200 disabled:opacity-50 flex items-center justify-center"
-                 >
-                   <Plus size={16} />
-                 </button>
-               </div>
-               <p className="text-sm text-gray-500">
-                 Stock: <span className="font-semibold">{item.quantity}</span>
-               </p>
-             </div>
-         
+            <div
+              key={index}
+              className="w-full bg-white shadow-lg rounded-lg p-6 mb-6"
+            >
+              <div className="flex flex-wrap items-center gap-6">
+                {item.images && item.images.length > 0 ? (
+                  <img
+                    className="w-32 h-36 rounded-md object-cover"
+                    src={item.images[0].url}
+                    alt="image"
+                  />
+                ) : (
+                  <div className="w-32 h-36 bg-gray-200 flex items-center justify-center rounded-md">
+                    <span className="text-gray-500">No Image</span>
+                  </div>
+                )}
 
-             <div className="truncate">
-               <h3 className="text-lg font-semibold text-gray-800">Total:</h3>
-               <p className="text-blue-600 font-bold text-lg">
-                 ฿{numberFormat(item.price * item.count)}
-               </p>
-             </div>
-         
-        
-             <button
-               onClick={() => actionRemoveCartProduct(item.id)}
-               className="text-red-500 hover:text-red-600 transition-colors"
-             >
-               <Trash2 size={30} />
-             </button>
-           </div>
-         </div>
-         
+                <div className="flex-1">
+                  <h2 className="text-lg font-semibold text-gray-800 truncate">
+                    {item.title}
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1 ">
+                    {item.description}
+                  </p>
+                  <div className="mt-3">
+                    <span className="text-gray-700 font-medium">Price:</span>{" "}
+                    <span className="text-blue-600 font-bold text-lg text-nowrap">
+                      ฿{numberFormat(item.price)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center">
+                    <button
+                      disabled={item.count <= 1}
+                      onClick={() =>
+                        actionUpdateQuantity(item.id, item.count - 1)
+                      }
+                      className="w-8 h-8 bg-gray-100 text-gray-600 rounded-l border hover:bg-gray-200 disabled:opacity-50 flex items-center justify-center"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <div className="w-10 text-center bg-gray-50 border-y">
+                      {item.count}
+                    </div>
+                    <button
+                      disabled={isDisabled || item.count >= item.quantity}
+                      onClick={() => {
+                        if (item.count >= item.quantity) {
+                          toast.error(
+                            `จำนวนสินค้าทั้งหมดมี ${item.quantity} ชิ้น`
+                          );
+                          setTimedisable();
+                          return;
+                        }
+                        actionUpdateQuantity(item.id, item.count + 1);
+                      }}
+                      className="w-8 h-8 bg-gray-100 text-gray-600 rounded-r border hover:bg-gray-200 disabled:opacity-50 flex items-center justify-center"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-500">
+                    Stock:{" "}
+                    <span className="font-semibold">{item.quantity}</span>
+                  </p>
+                </div>
+
+                <div className="truncate">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Total:
+                  </h3>
+                  <p className="text-blue-600 font-bold text-lg">
+                    ฿{numberFormat(item.price * item.count)}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => actionRemoveCartProduct(item.id)}
+                  className="text-red-500 hover:text-red-600 transition-colors"
+                >
+                  <Trash2 size={30} />
+                </button>
+              </div>
+            </div>
           ))}
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg space-y-6">

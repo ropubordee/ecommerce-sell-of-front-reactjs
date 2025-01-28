@@ -67,6 +67,13 @@ export default function CheckoutForm() {
 
   return (
     <form className="space-y-6" id="payment-form" onSubmit={handleSubmit}>
+
+<div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
+    <p className="font-bold">รหัสการชำระเงินบัตรเครดิตทดสอบ</p>
+    <p>หมายเลขบัตร: 4242 4242 4242 4242</p>
+    <p>วันหมดอายุ: 12/34</p>
+    <p>รหัสความปลอดภัย: 567</p>
+  </div>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button
         className={`w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-600 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300  ${

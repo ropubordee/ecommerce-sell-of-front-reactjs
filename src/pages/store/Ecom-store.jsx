@@ -44,7 +44,7 @@ const ecomStore = (set, get) => ({
   },
 
   actionRemoveCartProduct: (productId) => {
-    console.log("remove", productId);
+    // console.log("remove", productId);
     set((state) => ({
       carts: state.carts.filter((item) => item.id !== productId),
     }));
@@ -65,7 +65,7 @@ const ecomStore = (set, get) => ({
 
   actionLogin: async (form) => {
     const res = await axios.post("https://ecommerce-sell-of-backend-nodejs.vercel.app/api/login", form);
-    console.log(res.data.token);
+    // console.log(res.data.token);
     set({
       user: res.data.payload,
       token: res.data.token,

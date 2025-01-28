@@ -9,7 +9,7 @@ const MainNav = () => {
   const logout = userEcomStore((state) => state.logout);
   // console.log(Boolean(user))
   const [isOpen, setIsOpen] = useState(false);
-  console.log(carts.length);
+ 
 
   const proFileDropDown = () => {
     setIsOpen(!isOpen);
